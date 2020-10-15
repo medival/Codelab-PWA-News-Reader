@@ -12,3 +12,6 @@ if ("serviceWorker" in navigator) {
 } else {
     console.log("serviceWorker not supported for this browser");
 }
+
+// Request API
+document.addEventListener("DOMContentLoaded", () => getArticles());
