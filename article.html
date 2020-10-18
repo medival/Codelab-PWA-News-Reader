@@ -41,10 +41,13 @@
     <script src="js/db.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            getArticleById();
+            let item = getArticleById();
             const save = document.getElementById("save");
             save.onclick = () => {
-             
+              console.log("tombol fab di klik");
+              item.then((article) => {
+                saveForLater(article);
+              })
             }
         });
     </script>
