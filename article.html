@@ -24,6 +24,11 @@
     </nav>
 
       <div class="container" id="body-content"></div>
+      <div class="fixed-action-btn">
+        <a href="#" class="btn-floating btn-large red" id="save">
+          <i class="large material-icons">save</i>
+        </a>
+      </div>
 
     <script
     type="text/javascript"
@@ -35,6 +40,10 @@
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             getArticleById();
+            const save = document.getElementById("save");
+            save.onclick = () => {
+             
+            }
         });
     </script>
 </body>
