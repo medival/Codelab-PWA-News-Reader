@@ -85,50 +85,56 @@ function getArticles() {
 }
 
 let getArticleById = () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    let idParam = urlParams.get("id");
 
-    if ("caches" in window) {
-        caches.match(baseUrl + "article/" + idParam).then(function(response) {
-          if (response) {
-            response.json().then(function(data) {
-              var articleHTML = `
-                <div class="card">
+    return new Promise((resolve, reject) => {
+      const urlParams = new URLSearchParams(window.location.search);
+      let idParam = urlParams.get("id");
+  
+      if ("caches" in window) {
+          caches.match(baseUrl + "article/" + idParam).then((response) => {
+            if (response) {
+              response.json().then((data) => {
+                var articleHTML = `
+                  <div class="card">
+                    <div class="card-image waves-effect waves-block waves-light">
+                      <img src="${data.result.cover}" />
+                    </div>
+                    <div class="card-content">
+                      <span class="card-title">${data.result.post_title}</span>
+                      ${snarkdown(data.result.post_content)}
+                    </div>
+                  </div>
+                `;
+                // Sisipkan komponen card ke dalam elemen dengan id #content
+                document.getElementById("body-content").innerHTML = articleHTML;
+                resolve(data);
+              });
+            }
+          });
+        }
+  
+        let endPoint = `${baseUrl}article/${idParam}`;
+    
+      fetch(endPoint)
+      .then(status)
+      .then(json)
+      .then((data) => {
+          console.log(data);
+          let articleHTML = `
+              <div class="card">
                   <div class="card-image waves-effect waves-block waves-light">
-                    <img src="${data.result.cover}" />
+                      <img src="${data.result.cover}" />
                   </div>
                   <div class="card-content">
-                    <span class="card-title">${data.result.post_title}</span>
-                    ${snarkdown(data.result.post_content)}
+                      <span class="card-title">${data.result.post_title}</span>
+                     ${snarkdown(data.result.post_content)}
                   </div>
-                </div>
-              `;
-              // Sisipkan komponen card ke dalam elemen dengan id #content
-              document.getElementById("body-content").innerHTML = articleHTML;
-            });
-          }
-        });
-      }
-
-      let endPoint = `${baseUrl}article/${idParam}`;
-
-    fetch(endPoint)
-    .then(status)
-    .then(json)
-    .then((data) => {
-        console.log(data);
-        let articleHTML = `
-            <div class="card">
-                <div class="card-image waves-effect waves-block waves-light">
-                    <img src="${data.result.cover}" />
-                </div>
-                <div class="card-content">
-                    <span class="card-title">${data.result.post_title}</span>
-                   ${snarkdown(data.result.post_content)}
-                </div>
-            </div>
-        `;
-        document.getElementById("body-content").innerHTML = articleHTML;
+              </div>
+          `;
+          document.getElementById("body-content").innerHTML = articleHTML;
+          resolve(data);
+      })
     })
+    
 }
 
