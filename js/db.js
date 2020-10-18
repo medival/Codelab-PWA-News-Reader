@@ -20,3 +20,17 @@ let saveForLater = (article) => {
         console.log("Artikel berhasil disimpan");
     })
 }
+
+let getAll = () => {
+    return new Promise((resolve, reject) => {
+        dbPromised
+        .then((db) => {
+            let tx = db.transaction("articles", "readonly");
+            let store = tx.objectStore("articles");
+            return store.getAll();
+        })
+        .then((articles) => {
+            resolve(articles);
+        })
+    })
+}
