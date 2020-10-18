@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function(){
 						// Tutup sidenav
 						var sidenav = document.querySelector('.sidenav');
 						M.Sidenav.getInstance(sidenav).close();
-						
+
 						// Muat konten halaman yang dipanggil 
 						page = event.target.getAttribute('href').substr(1);
 						loadPage(page);
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function(){
 		xhttp.open("GET", 'nav.html', true);
 		xhttp.send();
 	}
-	
+
 	// Load page content
 	var page = window.location.hash.substr(1);
 	if(page == '') page = 'home';
@@ -47,7 +47,14 @@ document.addEventListener('DOMContentLoaded', function(){
 		var xhttp = new XMLHttpRequest();
 		xhttp.onreadystatechange = function() {
 			if (this.readyState == 4){
-				var content = document.querySelector(".body-content");
+				const content = document.querySelector("#body-content");
+
+				if (page === "home") {
+					getArticles();
+				} else if (page === "saved") {
+					getSavedArticles();
+				}
+
 				if(this.status == 200) {
 					content.innerHTML = xhttp.responseText;
 				} else if(this.status == 404) {
