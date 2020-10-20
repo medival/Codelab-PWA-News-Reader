@@ -6,15 +6,18 @@ var urlsToCache = [
 	'/index.html',
 	'/manifest.json',
 	'/nav.html',
+	'/font/material-icons.woff2',
 	'/pages/home.html',
 	'/pages/about.html',
 	'/pages/contact.html',
 	'/css/materialize.css',
 	'/css/materialize.min.css',
 	'/js/api.js',
+	'/js/db.js',
+	'/js/idb.js',
 	'/js/materialize.min.js',
 	'/js/regist.js',
-	'/js/script.js'
+	'/js/script.js',
 ];
 
 self.addEventListener('install', (event) => {

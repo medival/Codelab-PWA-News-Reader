@@ -9,7 +9,31 @@
     <link rel="stylesheet" href="css/materialize.min.css" />
     <link rel="manifest" href="/manifest.json" />
     <meta name="theme-color" content="#00897B" />
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+      /* fallback */
+      @font-face {
+        font-family: 'Material Icons';
+        font-style: normal;
+        font-weight: 400;
+        src: url(/font/material-icons.woff2) format('woff2');
+      }
+
+      .material-icons {
+        font-family: 'Material Icons';
+        font-weight: normal;
+        font-style: normal;
+        font-size: 24px;
+        line-height: 1;
+        letter-spacing: normal;
+        text-transform: none;
+        display: inline-block;
+        white-space: nowrap;
+        word-wrap: normal;
+        direction: ltr;
+        -webkit-font-feature-settings: 'liga';
+        -webkit-font-smoothing: antialiased;
+      }
+    </style>
   </head>
 <body>
     <nav class="teal lighten-1" role="navigation">
@@ -24,6 +48,11 @@
     </nav>
 
       <div class="container" id="body-content"></div>
+      <div class="fixed-action-btn">
+        <a href="" class="btn-floating btn-large red" id="save">
+          <i class="large material-icons">save</i>
+        </a>
+    </div>
 
     <script
     type="text/javascript"
@@ -32,9 +61,27 @@
     <script src="js/materialize.min.js"></script>
     <script src="js/api.js"></script>
     <script src="js/regist.js"></script>
+    <script src="js/idb.js"></script>
+    <script src="js/db.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            getArticleById();
+            let item = getArticleById();
+            let isFromSaved = urlParams.get("saved");
+            const btnSave = document.getElementById("save");
+
+            if (isFromSaved) {
+              btnSave.style.display = "none";
+              getSavedArticleById();
+            } else {
+              var item = getArticleById();
+            }
+            
+            save.onclick = () => {
+              console.log("Fab di clik");
+              item.then(function(article){
+                saveForLater(article);
+              })
+            }
         });
     </script>
 </body>
